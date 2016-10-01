@@ -24,7 +24,8 @@
       "type": "number"
     },
     "MarketCap": {
-      "type": "integer"
+      "type": "object",
+      "javaType": "java.math.BigInteger"
     },
     "Volume": {
       "type": "integer"
