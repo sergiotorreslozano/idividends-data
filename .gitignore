@@ -40,3 +40,5 @@ target/
 /.apt_generated/
 /hs*.log
 .env
+# These objects are created after each compilation, so there is no need to keep track of them in the repo
+/src/main/java/com/idividends/data/schemas/
