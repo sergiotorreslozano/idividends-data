@@ -9,7 +9,7 @@ public class StockQuoteWrapper {
 	private StockQuote stock;
 	private HttpStatus status;
 	private String customError;
-	private String cause;
+	private Throwable cause;
 	private String detailedMessage;
 
 	/**
@@ -60,7 +60,7 @@ public class StockQuoteWrapper {
 	/**
 	 * @return the cause
 	 */
-	public String getCause() {
+	public Throwable getCause() {
 		return cause;
 	}
 
@@ -68,7 +68,7 @@ public class StockQuoteWrapper {
 	 * @param cause
 	 *            the cause to set
 	 */
-	public void setCause(String cause) {
+	public void setCause(Throwable cause) {
 		this.cause = cause;
 	}
 
