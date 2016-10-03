@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "stock")
 public class Stock {
 
 	@Id
@@ -17,7 +17,10 @@ public class Stock {
 	private String symbol;
 
 	@Column(nullable = false)
-	private String marker;
+	private String market;
+
+	@Column(nullable = false)
+	private String name;
 
 	/**
 	 * 
@@ -30,10 +33,11 @@ public class Stock {
 	 * @param symbol
 	 * @param marker
 	 */
-	public Stock(String symbol, String marker) {
+	public Stock(String symbol, String market, String name) {
 		super();
 		this.symbol = symbol;
-		this.marker = marker;
+		this.market = market;
+		this.name = name;
 	}
 
 	/**
@@ -52,18 +56,18 @@ public class Stock {
 	}
 
 	/**
-	 * @return the marker
+	 * @return the market
 	 */
-	public String getMarker() {
-		return marker;
+	public String getMarket() {
+		return market;
 	}
 
 	/**
-	 * @param marker
-	 *            the marker to set
+	 * @param market
+	 *            the market to set
 	 */
-	public void setMarker(String marker) {
-		this.marker = marker;
+	public void setMarket(String market) {
+		this.market = market;
 	}
 
 	/**
@@ -71,6 +75,21 @@ public class Stock {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

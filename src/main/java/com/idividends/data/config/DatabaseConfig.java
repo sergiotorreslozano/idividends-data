@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * Database configuration class. It will be dependant of the environment
@@ -18,7 +22,6 @@ import org.springframework.context.annotation.Profile;
  *
  */
 @Configuration
-@Profile("default")
 public class DatabaseConfig {
 
 	private final static Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
@@ -26,8 +29,8 @@ public class DatabaseConfig {
 	private final static int USER_PASSWORD_PARAMS = 2;
 
 	@Bean
-	public DataSource postgresDataSource() {
-		// Changed to a shared DB in projec ad-crm-salesforce
+	@Profile("default")
+	public DataSource dataSource() {
 		String databaseUrl = System.getenv("DATABASE_URL");
 		URI dbUri;
 		try {
@@ -62,6 +65,36 @@ public class DatabaseConfig {
 		dataSource.setTestOnReturn(true);
 		dataSource.setValidationQuery("SELECT 1");
 		return dataSource;
+	}
+
+	@Bean
+	@Profile("default")
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
+	}
+
+	@Bean(destroyMethod = "close")
+	@Profile("test")
+	public DataSource h2dataSource() {
+		String DATABASE_URL = "jdbc:h2:mem:;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;DB_CLOSE_ON_EXIT=FALSE;INIT=create schema if not exists public;";
+		logger.debug("Loading in memory data base with parameters: " + DATABASE_URL);
+		logger.debug("SPRING_JPA_HIBERNATE_DDL_AUTO: " + System.getenv("SPRING_JPA_HIBERNATE_DDL_AUTO"));
+		org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
+		ds.setDriverClassName("org.h2.Driver");
+		ds.setUrl(DATABASE_URL);
+		ds.setUsername("sa");
+		ds.setPassword("");
+		ds.setInitialSize(5);
+		ds.setMaxActive(10);
+		ds.setMaxIdle(5);
+		ds.setMinIdle(2);
+		return ds;
+	}
+
+	@Bean
+	@Profile("test")
+	public JdbcOperations tpl() {
+		return new JdbcTemplate(h2dataSource());
 	}
 
 }
