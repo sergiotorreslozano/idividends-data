@@ -38,7 +38,8 @@ public class RestClient {
 			quote.setStatus(response.getStatusCode());
 		} catch (HttpClientErrorException httpException) {
 			quote.setStatus(httpException.getStatusCode());
-			quote.setDetailedMessage(httpException.getResponseBodyAsString());
+			quote.setDetailedMessage("Status text: " + httpException.getStatusText() + " response body: "
+					+ httpException.getResponseBodyAsString());
 			quote.setCustomError("Remote error for ticker: " + ticker + " url: " + url);
 		} catch (RestClientException rce) {
 			quote.setStatus(HttpStatus.SERVICE_UNAVAILABLE);

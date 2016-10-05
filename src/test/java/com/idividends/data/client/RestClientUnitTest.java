@@ -28,7 +28,7 @@ import com.idividends.data.dto.StockQuoteWrapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RestClientMockTest {
+public class RestClientUnitTest {
 
 	@InjectMocks
 	private RestClient restClient;

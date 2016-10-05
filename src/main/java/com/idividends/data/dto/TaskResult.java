@@ -2,6 +2,7 @@ package com.idividends.data.dto;
 
 public enum TaskResult {
 	SUCCESS("Success", "S000"),
+	NOT_SYNC("Not sync","N000"),
 	ERROR_NO_RESULT("No result", "E000"),
 	ERROR_REMOTE_SERVER_NOT_AVAILABLE("Remote server is not available","E001"),
 	
@@ -28,26 +29,10 @@ public enum TaskResult {
 	}
 
 	/**
-	 * @param message
-	 *            the message to set
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	/**
 	 * @return the code
 	 */
 	public String getCode() {
 		return code;
-	}
-
-	/**
-	 * @param code
-	 *            the code to set
-	 */
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 }

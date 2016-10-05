@@ -2,12 +2,17 @@ package com.idividends.data.service.impl;
 
 import java.util.List;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idividends.data.client.RestClient;
 import com.idividends.data.domain.Stock;
+import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.dto.TaskDto;
+import com.idividends.data.dto.TaskResult;
 import com.idividends.data.repository.StockRepository;
+import com.idividends.data.schemas.remote.StockQuote;
 import com.idividends.data.service.StockService;
 
 @Service
@@ -16,12 +21,36 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	private StockRepository stockRepository;
 
-	@Override
+	@Autowired
+	private Mapper mapper;
+
+	@Autowired
+	private RestClient restClient;
+
 	public TaskDto run() {
-		// TODO Auto-generated method stub
+		TaskDto result = new TaskDto();
 		List<Stock> stocks = stockRepository.findAll();
-		return null;
+		StockQuoteWrapper wrapper = null;
+		for (Stock stock : stocks) {
+			wrapper = restClient.findStock(stock.getSymbol());
+			switch (wrapper.getStatus()) {
+			case OK:
+				result.setResult(TaskResult.SUCCESS);
+				stock.setSyncCode(TaskResult.SUCCESS.getCode());
+				updateInformation(stock, wrapper.getStock());
+				break;
+
+			default:
+				result.setResult(TaskResult.ERROR_NO_RESULT);
+				break;
+			}
+		}
+		return result;
 	}
 
+	public Stock updateInformation(Stock stock, StockQuote remote) {
+		mapper.map(remote, stock);
+		return stockRepository.save(stock);
+	}
 
 }
