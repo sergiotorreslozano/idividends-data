@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.dozer.Mapping;
+
 import com.idividends.data.dto.TaskResult;
 
 @Entity(name = "stock")
@@ -46,6 +48,7 @@ public class Stock {
 	private String timestamp;
 
 	@Column
+	@Mapping("mSDate")
 	private Double mSDate;
 
 	@Column
