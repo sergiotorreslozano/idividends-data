@@ -53,4 +53,9 @@ public class StockServiceImpl implements StockService {
 		return stockRepository.save(stock);
 	}
 
+	@Override
+	public Stock findOne(Long id) {
+		return stockRepository.findOne(id);
+	}
+
 }

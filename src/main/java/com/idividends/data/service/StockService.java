@@ -24,4 +24,13 @@ public interface StockService {
 	 */
 	Stock updateInformation(Stock stock, StockQuote remote);
 
+	/**
+	 * Finds one stock
+	 * 
+	 * @param id
+	 *            the id of the stock to find
+	 * @return an stock
+	 */
+	Stock findOne(Long id);
+
 }

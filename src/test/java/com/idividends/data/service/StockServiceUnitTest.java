@@ -80,6 +80,12 @@ public class StockServiceUnitTest {
 		assertNotNull(stock);
 	}
 
+	@Test
+	public void findOneTest() {
+		Mockito.when(stockRepository.findOne(Matchers.anyLong())).thenReturn(new Stock("symbol", "market", "name"));
+		assertNotNull(stockService.findOne(1L));
+	}
+
 	private Stock createMockedStock() {
 		return new Stock("symbol", "market", "name");
 	}
