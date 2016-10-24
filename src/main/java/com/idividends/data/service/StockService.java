@@ -33,4 +33,14 @@ public interface StockService {
 	 */
 	Stock findOne(Long id);
 
+	/**
+	 * Adds a stock
+	 * 
+	 * @param stock
+	 *            the stock
+	 * 
+	 * @return The saved stock
+	 */
+	Stock save(Stock stock);
+
 }

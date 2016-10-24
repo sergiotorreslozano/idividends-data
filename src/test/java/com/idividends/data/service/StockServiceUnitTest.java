@@ -20,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.idividends.data.client.RestClient;
+import com.idividends.data.client.Client;
 import com.idividends.data.domain.Stock;
 import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.dto.TaskDto;
@@ -38,7 +38,7 @@ public class StockServiceUnitTest {
 	private StockServiceImpl stockService;
 
 	@Mock
-	private RestClient restClient;
+	private Client restClient;
 
 	@Mock
 	private StockRepository stockRepository;

@@ -17,7 +17,7 @@ import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.schemas.remote.StockQuote;
 
 @Component
-public class RestClient {
+public class RestClient implements Client {
 
 	private final static String STOCK_URL = "STOCK_URL";
 

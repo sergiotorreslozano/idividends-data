@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,5 +27,15 @@ public class StockController {
 		return stockService.findOne(id);
 	}
 
+	@RequestMapping(value = "/api/stocks", method = RequestMethod.POST)
+	public @ResponseBody Stock addStock(@RequestBody Stock stock) throws Exception {
+		logger.debug("Adding stock with ticker: " + stock.getSymbol());
+		return stockService.save(stock);
+	}
 
+	@RequestMapping(value = "/api/stocks/{id}", method = RequestMethod.PUT)
+	public @ResponseBody Stock updateStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
+		logger.debug("Updating stock with ticker: " + stock.getSymbol() + " and id: " + id);
+		return stockService.save(stock);
+	}
 }

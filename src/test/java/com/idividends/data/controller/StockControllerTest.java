@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idividends.data.domain.Stock;
 import com.idividends.data.repository.StockRepository;
 
@@ -24,6 +25,9 @@ public class StockControllerTest {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private StockRepository stockRepository;
@@ -51,4 +55,13 @@ public class StockControllerTest {
 				.andExpect(jsonPath("$.name").doesNotExist());
 	}
 	
+	@Test
+	public void addOne() throws Exception{
+		Stock stock = new Stock("symbol","market","name");
+		mvc.perform(MockMvcRequestBuilders.post("/api/stocks")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(stock)))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.id").exists());
+	}
+
 }

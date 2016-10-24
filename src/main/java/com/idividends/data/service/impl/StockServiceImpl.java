@@ -6,7 +6,7 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.idividends.data.client.RestClient;
+import com.idividends.data.client.Client;
 import com.idividends.data.domain.Stock;
 import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.dto.TaskDto;
@@ -25,7 +25,7 @@ public class StockServiceImpl implements StockService {
 	private Mapper mapper;
 
 	@Autowired
-	private RestClient restClient;
+	private Client restClient;
 
 	public TaskDto run() {
 		TaskDto result = new TaskDto();
@@ -56,6 +56,12 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public Stock findOne(Long id) {
 		return stockRepository.findOne(id);
+	}
+
+	@Override
+	public Stock save(Stock stock) {
+		Stock toSave = new Stock(stock.getSymbol(), stock.getMarket(), stock.getName());
+		return stockRepository.save(toSave);
 	}
 
 }

@@ -17,7 +17,7 @@ import com.idividends.data.dto.StockQuoteWrapper;
 public class RestClientIntegrationTest {
 
 	@Autowired
-	private RestClient restClient;
+	private Client restClient;
 
 	@Test
 	public void findStockTest() {
