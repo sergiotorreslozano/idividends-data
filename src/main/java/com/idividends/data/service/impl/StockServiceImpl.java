@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.idividends.data.client.Client;
 import com.idividends.data.domain.Stock;
+import com.idividends.data.dto.StockDto;
 import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.dto.TaskDto;
 import com.idividends.data.dto.TaskResult;
+import com.idividends.data.error.StockException;
 import com.idividends.data.repository.StockRepository;
 import com.idividends.data.schemas.remote.StockQuote;
 import com.idividends.data.service.StockService;
@@ -53,15 +55,31 @@ public class StockServiceImpl implements StockService {
 		return stockRepository.save(stock);
 	}
 
-	@Override
-	public Stock findOne(Long id) {
-		return stockRepository.findOne(id);
+	public Stock findOne(String symbol) {
+		Stock result = stockRepository.findBySymbol(symbol);
+		if(result == null){
+			throw new StockException("Stock not found by symbol: " + symbol);
+		}
+		return result;
 	}
 
-	@Override
-	public Stock save(Stock stock) {
+	public Stock save(StockDto stock) {
+		Stock result = stockRepository.findBySymbol(stock.getSymbol());
+		if (result != null) {
+			throw new StockException("The stock already exists: " + stock.getSymbol());
+		}
 		Stock toSave = new Stock(stock.getSymbol(), stock.getMarket(), stock.getName());
 		return stockRepository.save(toSave);
+	}
+
+	public Stock update(String symbol, StockDto stockDto) {
+		Stock result = stockRepository.findBySymbol(symbol);
+		if (result == null) {
+			throw new StockException("Stock not found by symbol: " + symbol);
+		}
+		result.setName(stockDto.getName());
+		result.setMarket(stockDto.getMarket());
+		return stockRepository.save(result);
 	}
 
 }

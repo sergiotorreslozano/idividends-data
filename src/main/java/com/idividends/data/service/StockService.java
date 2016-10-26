@@ -1,6 +1,7 @@
 package com.idividends.data.service;
 
 import com.idividends.data.domain.Stock;
+import com.idividends.data.dto.StockDto;
 import com.idividends.data.dto.TaskDto;
 import com.idividends.data.schemas.remote.StockQuote;
 
@@ -31,16 +32,27 @@ public interface StockService {
 	 *            the id of the stock to find
 	 * @return an stock
 	 */
-	Stock findOne(Long id);
+	Stock findOne(String symbol);
 
 	/**
 	 * Adds a stock
 	 * 
-	 * @param stock
+	 * @param stockDto
 	 *            the stock
 	 * 
 	 * @return The saved stock
 	 */
-	Stock save(Stock stock);
+	Stock save(StockDto stockDto);
+
+	/**
+	 * Updates a stock
+	 * 
+	 * @param symbol
+	 *            the symbol to find the stock
+	 * @param stockDto
+	 *            the new information
+	 * @return and updated stock
+	 */
+	Stock update(String symbol, StockDto stockDto);
 
 }

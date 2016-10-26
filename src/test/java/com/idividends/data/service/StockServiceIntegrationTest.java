@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.idividends.data.domain.Stock;
 import com.idividends.data.dto.TaskDto;
 import com.idividends.data.dto.TaskResult;
+import com.idividends.data.error.StockException;
 import com.idividends.data.repository.StockRepository;
 
 
@@ -36,6 +37,17 @@ public class StockServiceIntegrationTest {
 		assertEquals(tasks.getResult(), TaskResult.SUCCESS);
 		assertEquals(tasks.getResult().getMessage(), "Success");
 		assertEquals(stockRepository.findOne(stock.getId()).getName(), "Apple Inc");
+	}
+
+	@Test(expected = StockException.class)
+	public void findOneExceptionTest() {
+		stockService.findOne("nothing");
+	}
+
+	@Test
+	public void findOneTest() {
+		stockRepository.save(new Stock("symbol", "market", "name"));
+		assertEquals(stockService.findOne("symbol").getName(), "name");
 	}
 
 }

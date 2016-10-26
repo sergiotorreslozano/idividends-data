@@ -8,4 +8,13 @@ import com.idividends.data.domain.Stock;
 @Transactional
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
+	/**
+	 * Finds one Stock by its symbol
+	 * 
+	 * @param symbol
+	 *            the stock symbol
+	 * @return a Stock
+	 */
+	Stock findBySymbol(String symbol);
+
 }

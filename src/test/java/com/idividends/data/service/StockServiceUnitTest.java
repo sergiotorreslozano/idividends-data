@@ -22,9 +22,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.idividends.data.client.Client;
 import com.idividends.data.domain.Stock;
+import com.idividends.data.dto.StockDto;
 import com.idividends.data.dto.StockQuoteWrapper;
 import com.idividends.data.dto.TaskDto;
 import com.idividends.data.dto.TaskResult;
+import com.idividends.data.error.StockException;
 import com.idividends.data.repository.StockRepository;
 import com.idividends.data.schemas.remote.StockQuote;
 import com.idividends.data.service.impl.StockServiceImpl;
@@ -82,8 +84,47 @@ public class StockServiceUnitTest {
 
 	@Test
 	public void findOneTest() {
-		Mockito.when(stockRepository.findOne(Matchers.anyLong())).thenReturn(new Stock("symbol", "market", "name"));
-		assertNotNull(stockService.findOne(1L));
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString()))
+				.thenReturn(new Stock("symbol", "market", "name"));
+		assertNotNull(stockService.findOne("something"));
+	}
+
+	@Test(expected = StockException.class)
+	public void findOneExceptionTest() {
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString())).thenReturn(null);
+		stockService.findOne("something");
+	}
+
+	@Test
+	public void saveTest() {
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString())).thenReturn(null);
+		Mockito.when(stockRepository.save(Matchers.any(Stock.class))).thenReturn(createMockedStock());
+		Stock stock = stockService.save(new StockDto("symbol", "market", "name"));
+		assertNotNull(stock.getSymbol());
+		assertNotNull(stock.getMarket());
+		assertNotNull(stock.getName());
+	}
+
+	@Test(expected = StockException.class)
+	public void saveExceptionTest() {
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString())).thenReturn(createMockedStock());
+		stockService.save(new StockDto("symbol", "market", "name"));
+	}
+
+	@Test
+	public void updateTest() {
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString())).thenReturn(createMockedStock());
+		Mockito.when(stockRepository.save(Matchers.any(Stock.class))).thenReturn(createMockedStock());
+		Stock stock = stockService.update("symbol", new StockDto("symbol", "market", "name"));
+		assertNotNull(stock.getSymbol());
+		assertNotNull(stock.getMarket());
+		assertNotNull(stock.getName());
+	}
+
+	@Test(expected = StockException.class)
+	public void updateExceptionTest() {
+		Mockito.when(stockRepository.findBySymbol(Matchers.anyString())).thenReturn(null);
+		stockService.update("symbol", new StockDto("symbol", "market", "name"));
 	}
 
 	private Stock createMockedStock() {
