@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.idividends.data.domain.Stock;
 import com.idividends.data.dto.StockDto;
+import com.idividends.data.dto.TaskDto;
 import com.idividends.data.service.StockService;
 
 @RestController
@@ -38,5 +39,12 @@ public class StockController {
 	public @ResponseBody Stock updateStock(@PathVariable String symbol, @RequestBody StockDto stock) throws Exception {
 		logger.debug("Updating stock with ticker: " + stock.getSymbol());
 		return stockService.update(symbol, stock);
+	}
+
+	@RequestMapping(value = "/api/updateall", method = RequestMethod.POST)
+	public @ResponseBody TaskDto updateAllStock()
+			throws Exception {
+		logger.debug("Updating all the stocks ");
+		return stockService.run();
 	}
 }

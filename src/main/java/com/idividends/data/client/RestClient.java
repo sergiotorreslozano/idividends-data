@@ -1,5 +1,7 @@
 package com.idividends.data.client;
 
+import java.util.Map.Entry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,8 @@ public class RestClient implements Client {
 
 	private final static String STOCK_URL = "STOCK_URL";
 
+	private final static String SUCCESS = "SUCCESS";
+
 	@Autowired
 	private RestOperations restOperations;
 
@@ -35,7 +39,15 @@ public class RestClient implements Client {
 			ResponseEntity<StockQuote> response = restOperations.exchange(builder.build().encode().toUri(),
 					HttpMethod.GET, entity, StockQuote.class);
 			quote.setStock(response.getBody());
-			quote.setStatus(response.getStatusCode());
+			if (SUCCESS.equals(quote.getStock().getStatus())) {
+				quote.setStatus(response.getStatusCode());
+			} else {
+				quote.setStatus(HttpStatus.NOT_FOUND);
+				for (Entry<String, Object> e : quote.getStock().getAdditionalProperties().entrySet()) {
+					quote.setDetailedMessage("key: " + e.getKey() + " value: " + e.getValue());
+					quote.setCustomError("Wrong information sent: " + ticker + " url: " + url);
+				}
+			}
 		} catch (HttpClientErrorException httpException) {
 			quote.setStatus(httpException.getStatusCode());
 			quote.setDetailedMessage("Status text: " + httpException.getStatusText() + " response body: "

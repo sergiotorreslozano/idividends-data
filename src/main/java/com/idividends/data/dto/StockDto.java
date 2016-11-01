@@ -1,16 +1,11 @@
 package com.idividends.data.dto;
 
-import org.dozer.Mapping;
-
 public class StockDto {
 
-	@Mapping("symbol")
 	private String symbol;
 
-	@Mapping("market")
 	private String market;
 
-	@Mapping("market")
 	private String name;
 
 	public StockDto() {
@@ -73,5 +68,4 @@ public class StockDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }

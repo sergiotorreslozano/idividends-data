@@ -34,7 +34,7 @@ public class RestClientIntegrationTest {
 		StockQuoteWrapper wrapper = restClient.findStock(ticker);
 		assertNotNull(wrapper);
 		assertNotNull(wrapper.getStock());
-		assertEquals(wrapper.getStatus(), HttpStatus.OK);
+		assertEquals(wrapper.getStatus(), HttpStatus.NOT_FOUND);
 	}
 
 }

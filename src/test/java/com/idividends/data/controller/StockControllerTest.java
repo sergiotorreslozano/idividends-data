@@ -81,5 +81,15 @@ public class StockControllerTest {
 				.andExpect(jsonPath("$.name").value("newName"))
 				.andExpect(jsonPath("$.market").value("newMarket"));
 	}
+	
+	@Test
+	public void updateAllTest() throws Exception {
+		stockRepository.save(new Stock("symbol", "market", "name"));
+		mvc.perform(MockMvcRequestBuilders.post("/api/updateall")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.result").exists())
+;
+	}
 
 }
