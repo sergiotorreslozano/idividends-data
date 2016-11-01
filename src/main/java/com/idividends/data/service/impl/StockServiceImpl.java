@@ -82,4 +82,8 @@ public class StockServiceImpl implements StockService {
 		return stockRepository.save(result);
 	}
 
+	public void delete(String symbol) {
+		stockRepository.deleteBySymbol(symbol);
+	}
+
 }

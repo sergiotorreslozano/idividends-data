@@ -127,6 +127,12 @@ public class StockServiceUnitTest {
 		stockService.update("symbol", new StockDto("symbol", "market", "name"));
 	}
 
+	@Test
+	public void delete() {
+		Mockito.doNothing().when(stockRepository).deleteBySymbol(Mockito.any(String.class));
+		stockService.delete("symbol");
+	}
+
 	private Stock createMockedStock() {
 		return new Stock("symbol", "market", "name");
 	}

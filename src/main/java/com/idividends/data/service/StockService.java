@@ -55,4 +55,12 @@ public interface StockService {
 	 */
 	Stock update(String symbol, StockDto stockDto);
 
+	/**
+	 * Deletes a stock
+	 * 
+	 * @param symbol
+	 *            symbol of the stock to delete
+	 */
+	void delete(String symbol);
+
 }

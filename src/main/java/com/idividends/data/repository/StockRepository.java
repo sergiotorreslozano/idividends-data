@@ -17,4 +17,12 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 	 */
 	Stock findBySymbol(String symbol);
 
+	/**
+	 * Deletes an Stock by its symbol
+	 * 
+	 * @param symbol
+	 *            the stock symbol
+	 */
+	void deleteBySymbol(String symbol);
+
 }

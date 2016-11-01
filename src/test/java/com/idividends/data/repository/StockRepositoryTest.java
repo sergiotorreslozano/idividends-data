@@ -55,4 +55,13 @@ public class StockRepositoryTest {
 		repository.delete(entity.getId());
 		assertNull(repository.findOne(entity.getId()));
 	}
+
+	@Test
+	public void deleteOneBySymbol() {
+		Stock entity = new Stock("symbol", "market", "name");
+		entity = repository.save(entity);
+		assertNotNull(repository.findOne(entity.getId()));
+		repository.deleteBySymbol("symbol");
+		assertNull(repository.findOne(entity.getId()));
+	}
 }

@@ -3,6 +3,8 @@ package com.idividends.data.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,13 @@ public class StockController {
 	public @ResponseBody Stock updateStock(@PathVariable String symbol, @RequestBody StockDto stock) throws Exception {
 		logger.debug("Updating stock with ticker: " + stock.getSymbol());
 		return stockService.update(symbol, stock);
+	}
+
+	@RequestMapping(value = "/api/stocks/{symbol}", method = RequestMethod.DELETE)
+	public ResponseEntity<Stock> updateStock(@PathVariable String symbol) throws Exception {
+		logger.debug("Deleting stock with ticker: " + symbol);
+		stockService.delete(symbol);
+		return new ResponseEntity<Stock>(HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(value = "/api/updateall", method = RequestMethod.POST)
