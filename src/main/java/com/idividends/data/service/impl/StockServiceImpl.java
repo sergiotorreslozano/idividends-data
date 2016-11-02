@@ -86,4 +86,9 @@ public class StockServiceImpl implements StockService {
 		stockRepository.deleteBySymbol(symbol);
 	}
 
+	@Override
+	public List<Stock> findAll() {
+		return stockRepository.findAll();
+	}
+
 }

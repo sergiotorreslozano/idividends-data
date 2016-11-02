@@ -57,6 +57,14 @@ public class StockControllerTest {
 	}
 
 	@Test
+	public void findAllTest() throws Exception {
+		stockRepository.save(new Stock("symbol", "market", "name"));
+		mvc.perform(MockMvcRequestBuilders.get("/api/stocks").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.stocks").exists())
+				.andExpect(jsonPath("$.stocks[0].name").value("name"));
+	}
+
+	@Test
 	public void findOneFailTest() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/api/stocks/" + 1000).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());

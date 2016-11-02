@@ -1,5 +1,7 @@
 package com.idividends.data.service;
 
+import java.util.List;
+
 import com.idividends.data.domain.Stock;
 import com.idividends.data.dto.StockDto;
 import com.idividends.data.dto.TaskDto;
@@ -62,5 +64,12 @@ public interface StockService {
 	 *            symbol of the stock to delete
 	 */
 	void delete(String symbol);
+
+	/**
+	 * Finds all the stocks
+	 * 
+	 * @return a list of stocks
+	 */
+	List<Stock> findAll();
 
 }

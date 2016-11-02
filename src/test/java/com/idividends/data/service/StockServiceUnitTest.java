@@ -133,6 +133,14 @@ public class StockServiceUnitTest {
 		stockService.delete("symbol");
 	}
 
+	@Test
+	public void findAllTest() {
+		List<Stock> stocks = new ArrayList<>();
+		stocks.add(new Stock("symbol", "market", "name"));
+		Mockito.when(stockRepository.findAll()).thenReturn(stocks);
+		assertEquals(1, stockService.findAll().size());
+	}
+
 	private Stock createMockedStock() {
 		return new Stock("symbol", "market", "name");
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idividends.data.domain.Stock;
+import com.idividends.data.dto.Result;
 import com.idividends.data.dto.StockDto;
 import com.idividends.data.dto.TaskDto;
 import com.idividends.data.service.StockService;
@@ -29,6 +30,12 @@ public class StockController {
 	public @ResponseBody Stock findBySymbol(@PathVariable String symbol) throws Exception {
 		logger.debug("Finding stock with id: " + symbol);
 		return stockService.findOne(symbol);
+	}
+
+	@RequestMapping(value = "/api/stocks", method = RequestMethod.GET)
+	public @ResponseBody Result findAll() throws Exception {
+		logger.debug("Finding all stocks");
+		return new Result(stockService.findAll());
 	}
 
 	@RequestMapping(value = "/api/stocks", method = RequestMethod.POST)

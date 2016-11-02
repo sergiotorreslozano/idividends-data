@@ -2,6 +2,8 @@ package com.idividends.data.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,16 @@ public class StockServiceIntegrationTest {
 	public void findOneTest() {
 		stockRepository.save(new Stock("symbol", "market", "name"));
 		assertEquals(stockService.findOne("symbol").getName(), "name");
+	}
+
+	@Test
+	public void findAllTest() {
+		List<Stock> expected = stockService.findAll();
+		assertEquals(0, expected.size());
+		stockRepository.save(new Stock("symbol", "market", "name"));
+		stockRepository.save(new Stock("symbol2", "market2", "name2"));
+		expected = stockService.findAll();
+		assertEquals(2, expected.size());
 	}
 
 }
