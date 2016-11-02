@@ -83,6 +83,16 @@ public class StockControllerTest {
 	}
 	
 	@Test
+	public void deleteOneTest() throws Exception {
+		Stock stock = stockRepository.save(new Stock("symbol", "market", "name"));
+		mvc.perform(MockMvcRequestBuilders.delete("/api/stocks/" + stock.getSymbol())
+				.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isNotFound())
+				;
+	}
+	
+	@Test
 	public void updateAllTest() throws Exception {
 		stockRepository.save(new Stock("symbol", "market", "name"));
 		mvc.perform(MockMvcRequestBuilders.post("/api/updateall")
