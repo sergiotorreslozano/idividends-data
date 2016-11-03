@@ -57,7 +57,7 @@ public class StockController {
 		return new ResponseEntity<Stock>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/api/updateall", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/stocks/updateall", method = RequestMethod.POST)
 	public @ResponseBody TaskDto updateAllStock()
 			throws Exception {
 		logger.debug("Updating all the stocks ");

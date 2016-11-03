@@ -103,7 +103,7 @@ public class StockControllerTest {
 	@Test
 	public void updateAllTest() throws Exception {
 		stockRepository.save(new Stock("symbol", "market", "name"));
-		mvc.perform(MockMvcRequestBuilders.post("/api/updateall")
+		mvc.perform(MockMvcRequestBuilders.post("/api/stocks/updateall")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.result").exists())
