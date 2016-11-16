@@ -54,7 +54,7 @@ public class StockController {
 	public ResponseEntity<Stock> updateStock(@PathVariable String symbol) throws Exception {
 		logger.debug("Deleting stock with ticker: " + symbol);
 		stockService.delete(symbol);
-		return new ResponseEntity<Stock>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Stock>(HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/api/stocks/updateall", method = RequestMethod.POST)

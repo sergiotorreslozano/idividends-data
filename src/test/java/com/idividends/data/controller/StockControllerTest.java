@@ -96,7 +96,7 @@ public class StockControllerTest {
 		mvc.perform(MockMvcRequestBuilders.delete("/api/stocks/" + stock.getSymbol())
 				.contentType(MediaType.APPLICATION_JSON)
 				)
-				.andExpect(status().isNotFound())
+				.andExpect(status().isNoContent())
 				;
 	}
 	
