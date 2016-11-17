@@ -81,7 +81,11 @@ public class Stock {
 
 	/**
 	 * @param symbol
-	 * @param marker
+	 *            the stock symbol
+	 * @param market
+	 *            the market
+	 * @param name
+	 *            the name
 	 */
 	public Stock(String symbol, String market, String name) {
 		super();
